@@ -1,11 +1,17 @@
-﻿@model BlogProject_MaryLouiseAnhanceAbrena.Models.Teacher 
+﻿@model BlogProject_MaryLouiseAnhanceAbrena.Models.Teacher
 @{
     ViewBag.Title = "Show";
 }
 
 <h2>Show the Teacher</h2>
-@Model.TeacherId
-@Model.TeacherFname @Model.TeacherLname
-@Model.EmployeeNumber
-@Model.HireDate
-@Model.Salary
+<nav>
+    <a class="navlink" style="float:left;" href="/Teacher/List">Back to Teachers</a>
+    <a class="delLink" style="float:right; color:red" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
+</nav>
+<br />
+<p>Teacher Id: @Model.TeacherId  </p>
+<p> Teacher First name: @Model.TeacherFname </p>
+<p>Teacher Last name: @Model.TeacherLname  </p>
+<p>Employee number: @Model.EmployeeNumber  </p>
+<p>Hire date: @Model.HireDate  </p>
+<p>Salary: @Model.Salary  </p>

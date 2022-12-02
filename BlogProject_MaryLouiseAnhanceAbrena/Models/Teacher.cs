@@ -15,5 +15,8 @@ namespace BlogProject_MaryLouiseAnhanceAbrena.Models
         public string EmployeeNumber;
         public DateTime HireDate;
         public decimal Salary;
+
+        /// parameter-less construction function
+        public Teacher() { }
     }
 }

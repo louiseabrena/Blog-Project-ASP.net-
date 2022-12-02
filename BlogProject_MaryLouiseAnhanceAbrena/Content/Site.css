@@ -21,3 +21,16 @@ textarea {
     background-color: #777;
     border-color: #fff
 }
+
+nav {
+overflow: hidden;
+margin-bottom: 30px;
+}
+
+.navlink {
+float: left;
+}
+.delLink {
+float: right;
+color: darkred;
+}

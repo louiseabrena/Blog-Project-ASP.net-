@@ -11,6 +11,7 @@ using BlogProject_MaryLouiseAnhanceAbrena.Models;
 using Microsoft.Ajax.Utilities;
 using MySql.Data.MySqlClient;
 using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 using RouteAttribute = System.Web.Http.RouteAttribute;
 
 namespace BlogProject_MaryLouiseAnhanceAbrena.Controllers
@@ -98,6 +99,60 @@ namespace BlogProject_MaryLouiseAnhanceAbrena.Controllers
                 newTeacher.Salary = Salary;
             }
             return newTeacher;
+        }
+
+        /// <summary>
+        /// This will delete the teacher chosen
+        /// </summary>
+        /// <param name="id">teachers id</param>
+        /// <example>POST: api/TeacherData/DeleteTeacher/5 -> delete Teacher Id 5</example>
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            // Create instance of a connection
+            MySqlConnection Conn = Blogteacher.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            // Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            // SQL Query
+            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+        [HttpPost]
+        public void AddTeacher([FromBody]Teacher NewTeacher)
+        {
+            // Create instance of a connection
+            MySqlConnection Conn = Blogteacher.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            // Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            // SQL Query
+            cmd.CommandText = "insert into teachers (teacherid, teacherfname, teacherlname, employeenumber, hiredate, salary)" +
+                "values (@TeacherId, @TeacherFname, @TeacherLname, @EmployeeNumber, @HireDate, @Salary)";
+            cmd.Parameters.AddWithValue("@TeacherId", NewTeacher.TeacherId);
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", NewTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
         }
     }
 }

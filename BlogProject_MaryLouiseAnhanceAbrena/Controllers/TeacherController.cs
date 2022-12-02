@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BlogProject_MaryLouiseAnhanceAbrena.Models;
+using System.Diagnostics;
 
 namespace BlogProject_MaryLouiseAnhanceAbrena.Controllers
 {
@@ -48,6 +49,50 @@ namespace BlogProject_MaryLouiseAnhanceAbrena.Controllers
 
 
             return View(newTeacher);
+        }
+        // Delete the teachers with confirm
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher newTeacher = controller.FindTeacher(id);
+
+
+            return View(newTeacher);
+        }
+        //POST: /Teacher/Delete/{id}
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            controller.DeleteTeacher(id);
+            return RedirectToAction("List");
+        }
+
+        //GET: /Teacher/New
+        public ActionResult New()
+        {
+            return View();
+        }
+        //POST : /Teacher/Create
+        [HttpPost]
+        public ActionResult Create(int TeacherId, string TeacherFname, string TeacherLname, string EmployeeNumber, DateTime HireDate, decimal Salary)
+        {
+
+            //Identify that this method is running
+            Debug.WriteLine("I have accessed the Create Method");
+
+            Teacher NewTeacher = new Teacher();
+            NewTeacher.TeacherId = TeacherId;
+            NewTeacher.TeacherFname = TeacherFname;
+            NewTeacher.TeacherLname = TeacherLname;
+            NewTeacher.EmployeeNumber = EmployeeNumber;
+            NewTeacher.HireDate = HireDate;
+            NewTeacher.Salary = Salary;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.AddTeacher(NewTeacher);
+
+            return RedirectToAction("List");
         }
     }
 }
